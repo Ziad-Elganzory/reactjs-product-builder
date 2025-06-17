@@ -1,4 +1,5 @@
-import Image from "./Image";
+import Button from "./ui/Button";
+import Image from "./ui/Image";
 interface IProps{
 
 }
@@ -26,8 +27,21 @@ const ProductCard = ({}:IProps) => {
             />
         </div>
         <div className="flex items-center justify-between space-x-2 my-5 text-white">
-            <button className="bg-indigo-700 p-2 rounded-md w-full">Edit</button>
-            <button className="bg-red-700 p-2 rounded-md w-full">Delete</button>
+            <Button className={"bg-indigo-700"} onClick={() => alert("Added to cart")}>
+                Edit
+            </Button>
+            <Button className={"bg-red-700"}>
+                Delete
+            </Button>
+            <Button className={"bg-slate-700"}>
+                Loading
+            </Button> 
+            <Button className={"bg-green-700"}>
+                Success
+            </Button>
+            <Button className={"bg-gray-300"}>
+                Cancel
+            </Button>   
         </div>
     </div>
   )
