@@ -185,6 +185,10 @@ export const colors: string[] = [
   "#CB1C8D",
   "#000000",
   "#645CBB",
+  "#FF0032",
+  "#820000",
+  "#1F8A70",
+  "#FFB703",
 ];
 
 export const categories: ICategory[] = [

@@ -1,12 +1,14 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import ProductCard from "./components/ProductCard"
 import Modal from "./components/ui/Modal";
-import { formInputsList, productList } from "./data"
+import { colors, formInputsList, productList } from "./data"
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import type { IProduct } from "./interfaces";
 import { productValidation } from "./validation";
 import ErrorMessage from "./components/ErrorMessage";
+import CircleColor from "./components/CircleColor";
+import ColorTag from "./components/ColorTag";
 
 const App = () => {
 
@@ -32,11 +34,21 @@ const App = () => {
     price: ""
   });
 
+  const [tempColors, setTempColor] = useState<string[]>([]);
+
   const [isOpen, setIsOpen] = useState(false);
   
   const closeModal = ()=> setIsOpen(false);
   
   const openModal = () => setIsOpen(true);
+
+  const colorClickHandler = (color: string) => {
+    if(tempColors.includes(color)) {
+      setTempColor((prev) => prev.filter(colorItem => colorItem !== color));
+      return;
+    }
+    setTempColor((prev) => [...prev, color])
+  }
 
   const onChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -66,16 +78,13 @@ const App = () => {
       imageURL,
       price
     });
-    
-    console.log(errors);
-    
+        
     const hasErrors = Object.values(errors).some(value => value === "") &&  Object.values(errors).every(value => value === "");
     
     if(!hasErrors){
       setErrors(errors);
       return
     }
-    console.log(product)
   }
 
   const renderProductList = productList.map(product => <ProductCard key={product.id} product={product} />);
@@ -86,6 +95,10 @@ const App = () => {
       <ErrorMessage msg={errors[input.name]}/>
     </div>
   ));
+  const renderColors = colors.map(color => <CircleColor key={color} color={color} onClick={() => colorClickHandler(color)}/> );
+
+  const renderSelectedColors = tempColors.map( color => <ColorTag color={color} key={color} onClick={() => colorClickHandler(color)}/> )
+
 
   return (
     <main className="container">
@@ -98,11 +111,13 @@ const App = () => {
       <Modal isOpen={isOpen} closeModal={closeModal} title={"Add New Product"}> 
         <form className="space-y-3" onSubmit={submitHandler}>
           {renderFormInputList}
+          <div className="flex items-center flex-wrap space-x-1 my-2">{renderSelectedColors}</div>
+          <div className="flex items-center flex-wrap space-x-1 my-2">{renderColors}</div>
           <div className="flex items-center justify-between space-x-2">
-            <Button className={"bg-indigo-700 hover:bg-indigo-800"}>
+            <Button className={"bg-indigo-700 hover:bg-indigo-800"} type="submit">
                 Submit
             </Button>
-            <Button className={"bg-gray-400 hover:bg-gray-500"} onClick={onCancel}>
+            <Button className={"bg-gray-400 hover:bg-gray-500"} onClick={onCancel} type="reset">
                 Cancel
             </Button>        
           </div>
