@@ -1,3 +1,5 @@
+
+
     /**
      * Validate a product object.
      * @param {Object} product
@@ -7,12 +9,14 @@
      * @prop {string} price - The product price.
      * @returns {Object} an object with error messages for each of the product properties.
      */
-export const productValidation = (product : { title: string; description: string; imageURL: string; price: string;})=> {
-    const errors : {title: string; description: string; imageURL: string; price: string;} = {
+export const productValidation = (product : { title: string; description: string; imageURL: string; price: string})=> {
+    const errors : {title: string; description: string; imageURL: string; price: string; colors: string, category: string} = {
         title: "",
         description: "",
         imageURL: "",
-        price: ""
+        price: "",
+        colors: "",
+        category: ""
     }
 
     const validURL = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-./?%&=]*)?$/;

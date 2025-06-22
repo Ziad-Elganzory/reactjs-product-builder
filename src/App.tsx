@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import ProductCard from "./components/ProductCard"
 import Modal from "./components/ui/Modal";
-import { colors, formInputsList, productList } from "./data"
+import { categories, colors, formInputsList, productList } from "./data"
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import type { IProduct } from "./interfaces";
@@ -10,7 +10,7 @@ import ErrorMessage from "./components/ErrorMessage";
 import CircleColor from "./components/CircleColor";
 import ColorTag from "./components/ColorTag";
 import { v4 as uuid } from "uuid";
-
+import Select from "./components/ui/Select";
 
 const App = () => {
 
@@ -41,6 +41,8 @@ const App = () => {
   const [tempColors, setTempColor] = useState<string[]>([]);
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   
   const closeModal = ()=> setIsOpen(false);
   
@@ -75,12 +77,13 @@ const App = () => {
   const submitHandler = (event : FormEvent<HTMLFormElement>) : void => {
     event.preventDefault();
     const {title, description, imageURL, price} = product;
+    console.log(tempColors);
     
     const errors = productValidation({
       title,
       description,
       imageURL,
-      price
+      price,
     });
         
     const hasErrors = Object.values(errors).some(value => value === "") &&  Object.values(errors).every(value => value === "");
@@ -93,7 +96,8 @@ const App = () => {
     setProducts(prev => [{
         ...product,
         id: uuid(),
-        colors: tempColors
+        colors: tempColors,
+        category: selectedCategory
       },
       ...prev
     ])
@@ -128,6 +132,7 @@ const App = () => {
       <Modal isOpen={isOpen} closeModal={closeModal} title={"Add New Product"}> 
         <form className="space-y-3" onSubmit={submitHandler}>
           {renderFormInputList}
+          <Select selected={selectedCategory} setSelected={setSelectedCategory}/>
           <div className="flex items-center flex-wrap space-x-1 my-2">{renderSelectedColors}</div>
           <div className="flex items-center flex-wrap space-x-1 my-2">{renderColors}</div>
           <div className="flex items-center justify-between space-x-2">
