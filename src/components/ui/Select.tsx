@@ -7,14 +7,14 @@ import { categories } from '../../data'
 import type { ICategory } from '../../interfaces'
 
 interface IProps {
-    selected: ICategory;
+    selected: {name: string; imageURL: string;};
     setSelected: (category: ICategory) => void;
 }
 
 
 const Select = ({selected, setSelected}:IProps) => {
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={(setSelected)}>
       <Label className="block text-sm/6 font-medium text-gray-900">Category</Label>
       <div className="relative">
         <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-2 pl-3 pr-2 text-left text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
