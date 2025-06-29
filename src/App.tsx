@@ -207,9 +207,13 @@ const App = () => {
 
   return (
     <main className="container">
-      <Button className={"bg-indigo-700 hover:bg-indigo-800"} onClick={openModal}>
-        Add
-      </Button>
+      <div className="flex items-center justify-between mx-8  mt-5">
+        <h1 className="text-3xl font-extrabold text-gray-800">Product List</h1>
+        <Button className={"bg-indigo-700 hover:bg-indigo-800 px-10"} width="w-fit" onClick={openModal}>
+          Build a Product
+        </Button>
+      </div>
+
       <div className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
         {renderProductList}
       </div>

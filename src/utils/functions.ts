@@ -8,3 +8,16 @@ export function textSlicer(txt:string, max:number = 50): string{
     if(txt.length >= max) return `${txt.slice(0, max)} ...`;
     return txt;
 }
+
+/**
+ * Format a number as a price.
+ * @param {number} price The number to format as a price.
+ * @returns {string} The price formatted as a string.
+ */
+export function priceNumberFormatter(price: string): string {
+    const formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    });
+    return formatter.format(Number(price));
+}
